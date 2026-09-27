@@ -475,8 +475,8 @@
                 if ( !localStorage.getItem( 'customers' ) ) {
                     localStorage.setItem( 'customers', JSON.stringify( [] ) );
                 }
-                if ( !localStorage.getItem( 'vehicles' ) ) {
-                    localStorage.setItem( 'vehicles', JSON.stringify( [] ) );
+                if ( !localStorage.getItem( 'vehicles_2' ) ) {
+                    localStorage.setItem( 'vehicles_2', JSON.stringify( [] ) );
                 }
                 if ( !localStorage.getItem( 'rentals' ) ) {
                     localStorage.setItem( 'rentals', JSON.stringify( [] ) );
@@ -484,7 +484,8 @@
             }
 
             seed100Vehicles() {
-                let vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) );
+                return; //
+                let vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) );
                 if ( vehicles.length < 100 ) {
                     const presetCars = [
                         [ 'Toyota', 'Yaris Ativ', 'Eco', 800, 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=600&q=80' ],
@@ -520,7 +521,7 @@
                             status: 'AVAILABLE'
                         } );
                     }
-                    localStorage.setItem( 'vehicles', JSON.stringify( vehicles ) );
+                    localStorage.setItem( 'vehicles_2', JSON.stringify( vehicles ) );
                 }
             }
 
@@ -635,7 +636,7 @@
             renderAdminVehicles() {
                 const tbody = document.getElementById( 'adminVehiclesTableBody' );
                 tbody.innerHTML = '';
-                const vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                const vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
 
                 vehicles.forEach( v => {
                     const tr = document.createElement( 'tr' );
@@ -700,7 +701,7 @@
             saveVehicleModal( e ) {
                 e.preventDefault();
                 const id = document.getElementById( 'modalVehId' ).value;
-                let vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                let vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
 
                 const vehData = {
                     id: id ? parseInt( id ) : Date.now(),
@@ -741,7 +742,7 @@
                 const tbody = document.getElementById( 'adminRentalsTableBody' );
                 tbody.innerHTML = '';
                 const rentals = JSON.parse( localStorage.getItem( 'rentals' ) ) || [];
-                const vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                const vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
                 const customers = JSON.parse( localStorage.getItem( 'customers' ) ) || [];
 
                 if ( rentals.length === 0 ) {
@@ -781,7 +782,7 @@
 
             processReturn( rentalId ) {
                 let rentals = JSON.parse( localStorage.getItem( 'rentals' ) ) || [];
-                let vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                let vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
 
                 const rIndex = rentals.findIndex( r => r.id === rentalId );
                 const r = rentals[ rIndex ];
@@ -810,7 +811,7 @@
                 if ( vIndex !== -1 ) vehicles[ vIndex ].status = 'AVAILABLE';
 
                 localStorage.setItem( 'rentals', JSON.stringify( rentals ) );
-                localStorage.setItem( 'vehicles', JSON.stringify( vehicles ) );
+                localStorage.setItem( 'vehicles_2', JSON.stringify( vehicles ) );
 
                 alert( '✅ บันทึกรับคืนรถยนต์เรียบร้อยแล้ว!' );
                 this.renderAdminRentals();
@@ -833,7 +834,7 @@
                     if ( vIndex !== -1 ) vehicles[ vIndex ].status = 'AVAILABLE';
 
                     localStorage.setItem( 'rentals', JSON.stringify( rentals ) );
-                    localStorage.setItem( 'vehicles', JSON.stringify( vehicles ) );
+                    localStorage.setItem( 'vehicles_2', JSON.stringify( vehicles ) );
 
                     alert( '✅ ยกเลิกรายการเช่าเรียบร้อยแล้ว' );
 
@@ -884,7 +885,7 @@
             renderCustomerCarGrid() {
                 const grid = document.getElementById( 'customerCarGrid' );
                 grid.innerHTML = '';
-                const vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                const vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
 
                 const filtered = vehicles.filter( v => v.status === 'AVAILABLE' && ( this.selectedCategory === 'ทั้งหมด' || v.type.toLowerCase() === this.selectedCategory.toLowerCase() ) );
 
@@ -916,7 +917,7 @@
             }
 
             openBookingDateModal( vehId ) {
-                const vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                const vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
                 this.selectedCarForBooking = vehicles.find( item => item.id === vehId );
 
                 document.getElementById( 'bookingCarDetailText' ).innerHTML = `
@@ -1013,12 +1014,12 @@
 
                 rentals.push( newRental );
 
-                let vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                let vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
                 const vIndex = vehicles.findIndex( v => v.id === vehicle.id );
                 if ( vIndex !== -1 ) vehicles[ vIndex ].status = 'RENTED';
 
                 localStorage.setItem( 'rentals', JSON.stringify( rentals ) );
-                localStorage.setItem( 'vehicles', JSON.stringify( vehicles ) );
+                localStorage.setItem( 'vehicles_2', JSON.stringify( vehicles ) );
 
                 this.closePaymentModal();
                 alert( `✅ ทำรายการเช่าสำเร็จ!\nกำหนดคืนรถวันที่: ${ dueDate }` );
@@ -1031,7 +1032,7 @@
                 const tbody = document.getElementById( 'custHistoryTableBody' );
                 tbody.innerHTML = '';
                 const rentals = JSON.parse( localStorage.getItem( 'rentals' ) ) || [];
-                const vehicles = JSON.parse( localStorage.getItem( 'vehicles' ) ) || [];
+                const vehicles = JSON.parse( localStorage.getItem( 'vehicles_2' ) ) || [];
 
                 const userRentals = rentals.filter( r => r.customer_id === this.currentUser.id ).reverse();
 
